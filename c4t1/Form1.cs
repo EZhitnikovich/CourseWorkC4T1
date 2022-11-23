@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Drawing;
 
 namespace c4t1
@@ -20,6 +21,12 @@ namespace c4t1
             pictureBox1.Refresh();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            labirinth = LabirinthGenerator.Generate(Convert.ToInt32(numericUpDownX.Value), Convert.ToInt32(numericUpDownY.Value));
+            pictureBox1.Refresh();
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             LabirinthDrawer.Draw(e.Graphics, labirinth, GradientGenerator.GetGradient(Color.Green, Color.Red, 10));
@@ -32,9 +39,15 @@ namespace c4t1
             var X = e2.X/10;
             var Y = e2.Y/10;
 
-            if(labirinth.TryGetWeight(X,Y, out var weight))
+            //if(labirinth.TryGetWeight(X,Y, out var weight))
+            //{
+            //    MessageBox.Show($"Высота: {weight}");
+            //}
+
+            if (checkBox1.Checked)
             {
-                MessageBox.Show($"Высота: {weight}");
+                labirinth.AddWeight(X, Y, Convert.ToInt32(numericUpDown1.Value));
+                pictureBox1.Refresh();
             }
         }
 
@@ -46,12 +59,6 @@ namespace c4t1
             {
                 label3.Text = $"Высота:\n[{X+1},{Y+1}]:{weight}";
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            labirinth = LabirinthGenerator.Generate(Convert.ToInt32(numericUpDownX.Value), Convert.ToInt32(numericUpDownY.Value));
-            pictureBox1.Refresh();
         }
     }
 }

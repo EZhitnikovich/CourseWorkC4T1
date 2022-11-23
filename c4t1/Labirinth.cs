@@ -36,5 +36,22 @@ namespace c4t1
             weight = Cells[x, y].Weight;
             return true;
         }
+
+        public void AddWeight(int x, int y, int weight)
+        {
+            if (x > Width - 1 || x < 0 || y > Height - 1 || y < 0)
+            {
+                return;
+            }
+
+            if (Cells[x, y].Weight >= Math.Abs(weight))
+            {
+                Cells[x, y].Weight += weight;
+            }
+            else
+            {
+                Cells[x, y].Weight = 0;
+            }
+        }
     }
 }
