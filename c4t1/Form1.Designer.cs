@@ -159,12 +159,12 @@
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(6, 47);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
             this.numericUpDown1.Minimum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             -2147483648});

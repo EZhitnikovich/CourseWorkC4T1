@@ -44,11 +44,8 @@ namespace c4t1
                 return;
             }
 
-            if (Cells[x, y].Weight >= Math.Abs(weight))
-            {
-                Cells[x, y].Weight += weight;
-            }
-            else
+            Cells[x, y].Weight += weight;
+            if(Cells[x, y].Weight < 0)
             {
                 Cells[x, y].Weight = 0;
             }
