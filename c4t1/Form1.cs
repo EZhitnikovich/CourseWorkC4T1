@@ -39,11 +39,6 @@ namespace c4t1
             var X = e2.X/10;
             var Y = e2.Y/10;
 
-            //if(labirinth.TryGetWeight(X,Y, out var weight))
-            //{
-            //    MessageBox.Show($"Высота: {weight}");
-            //}
-
             if (checkBox1.Checked)
             {
                 labirinth.AddWeight(X, Y, Convert.ToInt32(numericUpDown1.Value));
@@ -59,6 +54,16 @@ namespace c4t1
             {
                 label3.Text = $"Высота:\n[{X+1},{Y+1}]:{weight}";
             }
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

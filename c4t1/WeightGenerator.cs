@@ -12,38 +12,38 @@ namespace c4t1
         {
             Random rand = new Random();
 
-            for (int i = 0; i < labirinth.Width; i++)
+            for (int x = 0; x < labirinth.Width; x++)
             {
-                for (int j = 0; j < labirinth.Height; j++)
+                for (int y = 0; y < labirinth.Height; y++)
                 {
                     int sum = 0;
                     int sumCount = 0;
 
-                    if (j != 0)
+                    if (y != 0)
                     {
-                        sum += labirinth.Cells[i, j - 1].Weight;
+                        sum += labirinth.Cells[x, y - 1].Weight;
                         sumCount++;
                     }
 
-                    if (j != labirinth.Height - 1)
+                    if (y != labirinth.Height - 1)
                     {
-                        sum += labirinth.Cells[i, j + 1].Weight;
+                        sum += labirinth.Cells[x, y + 1].Weight;
                         sumCount++;
                     }
 
-                    if (i != 0)
+                    if (x != 0)
                     {
-                        sum += labirinth.Cells[i - 1, j].Weight;
+                        sum += labirinth.Cells[x - 1, y].Weight;
                         sumCount++;
                     }
 
-                    if (i != labirinth.Width - 1)
+                    if (x != labirinth.Width - 1)
                     {
-                        sum += labirinth.Cells[i + 1, j].Weight;
+                        sum += labirinth.Cells[x + 1, y].Weight;
                         sumCount++;
                     }
 
-                    labirinth.Cells[i, j].Weight = sum / sumCount + rand.Next(changeFrom, changeTo) * (rand.Next(0, 3) == 1 ? 1 : -1);
+                    labirinth.Cells[x, y].Weight = sum / sumCount + rand.Next(changeFrom, changeTo) * (rand.Next(0, 3) == 1 ? 1 : -1);
                 }
             }
         }

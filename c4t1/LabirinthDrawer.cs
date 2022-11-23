@@ -31,8 +31,6 @@ namespace c4t1
                         index = Convert.ToInt32(Convert.ToDouble(labirinth.Cells[i, j].Weight + minWeight) / Convert.ToDouble(maxWeight) * (gradient.Count - 1));
                     }
                     g.FillRectangle(new SolidBrush(gradient[index]), new Rectangle(i * cellSize, j * cellSize, cellSize, cellSize));
-
-                    //Debugger.Log(0, "", $"{index}, [{i}:{j}], {labirinth.Cells[i, j].Weight}, {minWeight}:{labirinth.Cells[i, j].Weight==minWeight}, {maxWeight}:{labirinth.Cells[i, j].Weight==maxWeight+minWeight}\n");
                 }
             }
         }
