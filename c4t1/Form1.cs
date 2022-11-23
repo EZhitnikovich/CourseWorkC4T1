@@ -42,7 +42,16 @@ namespace c4t1
         {
             var X = e.Location.X / 10;
             var Y = e.Location.Y / 10;
-            label3.Text = $"{X}:{Y}";
+            if (labirinth.TryGetWeight(X, Y, out var weight))
+            {
+                label3.Text = $"Высота:\n[{X+1},{Y+1}]:{weight}";
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            labirinth = LabirinthGenerator.Generate(Convert.ToInt32(numericUpDownX.Value), Convert.ToInt32(numericUpDownY.Value));
+            pictureBox1.Refresh();
         }
     }
 }

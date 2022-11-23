@@ -14,6 +14,6 @@ namespace c4t1
         public bool Down { get; set; }
         public bool Left { get; set; }
         public bool Right { get; set; }
-        public int Weight { get; set; }
+        public int Weight { get; set; } = 0;
     }
 }
