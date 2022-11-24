@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using c4t1.Model;
 
 namespace c4t1
 {
@@ -25,12 +27,31 @@ namespace c4t1
             {
                 for (int j = 0; j < labirinth.Height; j++)
                 {
-                    var index = 0;
-                    if (maxWeight != minWeight)
+                    var color = Color.White;
+
+                    if (labirinth.Cells[i,j].State == CellState.Common)
                     {
-                        index = Convert.ToInt32(Convert.ToDouble(labirinth.Cells[i, j].Weight + minWeight) / Convert.ToDouble(maxWeight) * (gradient.Count - 1));
+                        var index = 0;
+                        if (maxWeight != minWeight)
+                        {
+                            index = Convert.ToInt32(Convert.ToDouble(labirinth.Cells[i, j].Weight + minWeight) / Convert.ToDouble(maxWeight) * (gradient.Count - 1));
+                        }
+
+                        color = gradient[index];
                     }
-                    g.FillRectangle(new SolidBrush(gradient[index]), new Rectangle(i * cellSize, j * cellSize, cellSize, cellSize));
+                    else if(labirinth.Cells[i, j].State == CellState.Finish)
+                    {
+                        color = Color.Blue;
+                    }
+                    else if (labirinth.Cells[i,j].State == CellState.Start)
+                    {
+                        color = Color.Yellow;
+                    }
+                    else if (labirinth.Cells[i,j].State == CellState.Path)
+                    {
+                        color = Color.Chocolate;
+                    }
+                    g.FillRectangle(new SolidBrush(color), new Rectangle(i * cellSize, j * cellSize, cellSize, cellSize));
                 }
             }
         }

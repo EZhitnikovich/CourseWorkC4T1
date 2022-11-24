@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using c4t1.Model;
 
 namespace c4t1
 {
-    public static class WeightGenerator
+    public static class WeightChanger
     {
-        public static void FillWeights(Labirinth labirinth, int changeFrom, int changeTo)
+        public static void FillRandomWeights(Labirinth labirinth, int changeFrom, int changeTo)
         {
             Random rand = new Random();
 
@@ -55,6 +56,20 @@ namespace c4t1
             foreach (var item in labirinth.Cells)
             {
                 item.Weight += minAbs;
+            }
+        }
+
+        public static void AddWeightsInRange(Labirinth labirinth, int weight, int X1, int Y1, int X2, int Y2)
+        {
+            (X1, X2) = X1 > X2 ? (X2, X1) : (X1, X2);
+            (Y1, Y2) = Y1 > Y2 ? (Y2, Y1) : (Y1, Y2);
+
+            for (int i = X1; i <= X2; i++)
+            {
+                for (int j = Y1; j <= Y2; j++)
+                {
+                    labirinth.AddWeight(i, j, weight);
+                }
             }
         }
     }

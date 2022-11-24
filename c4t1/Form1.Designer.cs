@@ -39,11 +39,17 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.radioButtonCommon = new System.Windows.Forms.RadioButton();
+            this.radioButtonFinish = new System.Windows.Forms.RadioButton();
+            this.radioButtonStart = new System.Windows.Forms.RadioButton();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -183,12 +189,75 @@
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "Включить";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.radioButtonCommon);
+            this.groupBox2.Controls.Add(this.radioButtonFinish);
+            this.groupBox2.Controls.Add(this.radioButtonStart);
+            this.groupBox2.Location = new System.Drawing.Point(679, 222);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(109, 98);
+            this.groupBox2.TabIndex = 9;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Состояние";
+            // 
+            // radioButtonCommon
+            // 
+            this.radioButtonCommon.AutoSize = true;
+            this.radioButtonCommon.Location = new System.Drawing.Point(6, 72);
+            this.radioButtonCommon.Name = "radioButtonCommon";
+            this.radioButtonCommon.Size = new System.Drawing.Size(77, 19);
+            this.radioButtonCommon.TabIndex = 2;
+            this.radioButtonCommon.TabStop = true;
+            this.radioButtonCommon.Text = "Обычное";
+            this.radioButtonCommon.UseVisualStyleBackColor = true;
+            this.radioButtonCommon.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButtonFinish
+            // 
+            this.radioButtonFinish.AutoSize = true;
+            this.radioButtonFinish.Location = new System.Drawing.Point(6, 47);
+            this.radioButtonFinish.Name = "radioButtonFinish";
+            this.radioButtonFinish.Size = new System.Drawing.Size(66, 19);
+            this.radioButtonFinish.TabIndex = 1;
+            this.radioButtonFinish.TabStop = true;
+            this.radioButtonFinish.Text = "Финиш";
+            this.radioButtonFinish.UseVisualStyleBackColor = true;
+            this.radioButtonFinish.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButtonStart
+            // 
+            this.radioButtonStart.AutoSize = true;
+            this.radioButtonStart.Location = new System.Drawing.Point(6, 22);
+            this.radioButtonStart.Name = "radioButtonStart";
+            this.radioButtonStart.Size = new System.Drawing.Size(56, 19);
+            this.radioButtonStart.TabIndex = 0;
+            this.radioButtonStart.TabStop = true;
+            this.radioButtonStart.Text = "Старт";
+            this.radioButtonStart.UseVisualStyleBackColor = true;
+            this.radioButtonStart.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Location = new System.Drawing.Point(679, 326);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(109, 23);
+            this.button3.TabIndex = 10;
+            this.button3.Text = "Путь";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label3);
@@ -206,6 +275,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,5 +295,10 @@
         private GroupBox groupBox1;
         private NumericUpDown numericUpDown1;
         private CheckBox checkBox1;
+        private GroupBox groupBox2;
+        private RadioButton radioButtonCommon;
+        private RadioButton radioButtonFinish;
+        private RadioButton radioButtonStart;
+        private Button button3;
     }
 }
