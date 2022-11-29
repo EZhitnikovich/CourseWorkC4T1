@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using c4t1.Model;
 
-namespace c4t1
+namespace c4t1.Generator
 {
     public static class WeightChanger
     {

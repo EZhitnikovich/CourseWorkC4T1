@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using c4t1.Model;
 
-namespace c4t1
+namespace c4t1.Generator
 {
     internal static class LabirinthChanger
     {
         public static Labirinth Generate(int width, int height)
         {
             var labirinth = new Labirinth(width, height);
-            
+
             for (int i = 0; i < labirinth.Width; i++)
             {
                 for (int j = 0; j < labirinth.Height; j++)
@@ -32,7 +32,7 @@ namespace c4t1
             {
                 for (int j = 0; j < labirinth.Height; j++)
                 {
-                    if (labirinth.Cells[i,j].State == cellState)
+                    if (labirinth.Cells[i, j].State == cellState)
                     {
                         return new Point(i, j);
                     }
@@ -44,18 +44,28 @@ namespace c4t1
 
         public static void SetNewStartPoint(Labirinth labirinth, int x, int y)
         {
+            if (x < 0 || x > labirinth.Width || y < 0 || y > labirinth.Height)
+            {
+                return;
+            }
+
             var point = GetFirstByState(labirinth, CellState.Start);
 
-            if(point != new Point(-1, -1))
+            if (point != new Point(-1, -1))
             {
                 labirinth.Cells[point.X, point.Y].State = CellState.Common;
             }
 
-            labirinth.Cells[x,y].State = CellState.Start;
+            labirinth.Cells[x, y].State = CellState.Start;
         }
 
         public static void SetNewFinishPoint(Labirinth labirinth, int x, int y)
         {
+            if (x < 0 || x > labirinth.Width || y < 0 || y > labirinth.Height)
+            {
+                return;
+            }
+
             var point = GetFirstByState(labirinth, CellState.Finish);
 
             if (point != new Point(-1, -1))
@@ -68,6 +78,11 @@ namespace c4t1
 
         public static void SetCommonState(Labirinth labirinth, int x, int y)
         {
+            if (x < 0 || x > labirinth.Width || y < 0 || y > labirinth.Height)
+            {
+                return;
+            }
+
             labirinth.Cells[x, y].State = CellState.Common;
         }
     }

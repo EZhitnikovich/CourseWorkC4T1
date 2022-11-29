@@ -75,7 +75,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(109, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Random";
+            this.button1.Text = "Случайная карта";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -92,7 +92,7 @@
             this.numericUpDownX.Size = new System.Drawing.Size(75, 23);
             this.numericUpDownX.TabIndex = 2;
             this.numericUpDownX.Value = new decimal(new int[] {
-            170,
+            85,
             0,
             0,
             0});
@@ -105,7 +105,7 @@
             this.numericUpDownY.Size = new System.Drawing.Size(75, 23);
             this.numericUpDownY.TabIndex = 3;
             this.numericUpDownY.Value = new decimal(new int[] {
-            100,
+            50,
             0,
             0,
             0});
@@ -134,9 +134,10 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.Location = new System.Drawing.Point(679, 369);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 15);
+            this.label3.Size = new System.Drawing.Size(50, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "label3";
             // 
@@ -147,7 +148,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(109, 23);
             this.button2.TabIndex = 7;
-            this.button2.Text = "Generate";
+            this.button2.Text = "Чистая карта";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 

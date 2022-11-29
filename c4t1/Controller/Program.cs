@@ -1,4 +1,4 @@
-namespace c4t1
+namespace c4t1.Controller
 {
     internal static class Program
     {
