@@ -1,3 +1,4 @@
+using c4t1.Controller;
 using c4t1.Generator;
 using c4t1.Model;
 using c4t1.Utils;
@@ -6,36 +7,43 @@ namespace c4t1;
 
 public partial class Form1 : Form
 {
-    Labirinth labirinth;
+    LabirinthController labirinthController;
 
     int CELL_SIZE = 20;
 
     public Form1()
     {
         InitializeComponent();
-        labirinth = new();
+        labirinthController = new LabirinthController();
     }
 
     private void button1_Click(object sender, EventArgs e)
     {
-        labirinth = LabirinthChanger.Generate(Convert.ToInt32(numericUpDownX.Value), Convert.ToInt32(numericUpDownY.Value));
-        WeightChanger.FillRandomWeights(labirinth, 0, 25);
-        WeightChanger.MakePositiveWeights(labirinth);
+        int width = Convert.ToInt32(numericUpDownX.Value);
+        int height = Convert.ToInt32(numericUpDownY.Value);
+
+        labirinthController.Generate(width, height);
+
+        WeightChanger.FillRandomWeights(labirinthController.Labirinth, 0, 25);
+        WeightChanger.MakePositiveWeights(labirinthController.Labirinth);
         pictureBox1.Refresh();
     }
 
     private void button2_Click(object sender, EventArgs e)
     {
-        labirinth = LabirinthChanger.Generate(Convert.ToInt32(numericUpDownX.Value), Convert.ToInt32(numericUpDownY.Value));
+        int width = Convert.ToInt32(numericUpDownX.Value);
+        int height = Convert.ToInt32(numericUpDownY.Value);
+
+        labirinthController.Generate(width, height);
         pictureBox1.Refresh();
     }
     private async void button3_Click(object sender, EventArgs e)
     {
         //TODO: clear
 
-        if(LabirinthChanger.GetFirstByState(labirinth, CellState.Start) != new Point(-1,-1) && LabirinthChanger.GetFirstByState(labirinth, CellState.Finish) != new Point(-1, -1))
+        if(labirinthController.GetFirstByState(CellState.Start) != new Point(-1,-1) && labirinthController.GetFirstByState(CellState.Finish) != new Point(-1, -1))
         {
-            foreach (var item in labirinth.Cells)
+            foreach (var item in labirinthController.Labirinth.Cells)
             {
                 if (item.State == CellState.Path)
                 {
@@ -47,7 +55,7 @@ public partial class Form1 : Form
 
             await Task.Run(() =>
             {
-                path = PathFinder.FindPath(labirinth.Cells, LabirinthChanger.GetFirstByState(labirinth, CellState.Start), LabirinthChanger.GetFirstByState(labirinth, CellState.Finish), pictureBox1.CreateGraphics());
+                path = PathFinder.FindPath(labirinthController.Labirinth.Cells, labirinthController.GetFirstByState(CellState.Start), labirinthController.GetFirstByState(CellState.Finish), pictureBox1.CreateGraphics());
             });
 
             if (!path.Any())
@@ -62,17 +70,17 @@ public partial class Form1 : Form
 
             foreach (var item in path)
             {
-                labirinth.Cells[item.X, item.Y].State = CellState.Path;
-                weight += labirinth.Cells[item.X, item.Y].Weight;
+                labirinthController.Labirinth.Cells[item.X, item.Y].State = CellState.Path;
+                weight += labirinthController.Labirinth.Cells[item.X, item.Y].Weight;
 
-                if(labirinth.Cells[item.X, item.Y].Weight < min)
+                if(labirinthController.Labirinth.Cells[item.X, item.Y].Weight < min)
                 {
-                    min = labirinth.Cells[item.X, item.Y].Weight;
+                    min = labirinthController.Labirinth.Cells[item.X, item.Y].Weight;
                 }
 
-                if(labirinth.Cells[item.X, item.Y].Weight > max)
+                if(labirinthController.Labirinth.Cells[item.X, item.Y].Weight > max)
                 {
-                    max = labirinth.Cells[item.X, item.Y].Weight;
+                    max = labirinthController.Labirinth.Cells[item.X, item.Y].Weight;
                 }
             }
 
@@ -84,7 +92,7 @@ public partial class Form1 : Form
 
     private void pictureBox1_Paint(object sender, PaintEventArgs e)
     {
-        LabirinthDrawer.Draw(e.Graphics, labirinth, GradientGenerator.GetGradient(Color.Green, Color.Red, 100), CELL_SIZE);
+        LabirinthDrawer.Draw(e.Graphics, labirinthController.Labirinth, GradientGenerator.GetGradient(Color.Green, Color.Red, 100), CELL_SIZE);
     }
 
     private void pictureBox1_Click(object sender, EventArgs e)
@@ -96,15 +104,15 @@ public partial class Form1 : Form
 
         if(radioButtonStart.Checked)
         {
-            LabirinthChanger.SetNewStartPoint(labirinth, x, y);
+            labirinthController.SetNewState(x, y, CellState.Start);
         }
         else if(radioButtonFinish.Checked)
         {
-            LabirinthChanger.SetNewFinishPoint(labirinth, x, y);
+            labirinthController.SetNewState(x, y, CellState.Finish);
         }
         else if (radioButtonCommon.Checked)
         {
-            LabirinthChanger.SetCommonState(labirinth, x, y);
+            labirinthController.SetCommonState(x, y);
         }
 
         pictureBox1.Refresh();
@@ -114,7 +122,7 @@ public partial class Form1 : Form
     {
         var X = e.Location.X / CELL_SIZE;
         var Y = e.Location.Y / CELL_SIZE;
-        if (labirinth.TryGetWeight(X, Y, out var weight))
+        if (labirinthController.TryGetWeight(X, Y, out var weight))
         {
             label3.Text = $"Высота:\n[{X+1},{Y+1}]:{weight}";
         }
@@ -139,7 +147,7 @@ public partial class Form1 : Form
             var X = e.Location.X / CELL_SIZE;
             var Y = e.Location.Y / CELL_SIZE;
 
-            WeightChanger.AddWeightsInRange(labirinth, Convert.ToInt32(numericUpDown1.Value), x1, y1, X, Y);
+            WeightChanger.AddWeightsInRange(labirinthController.Labirinth, Convert.ToInt32(numericUpDown1.Value), x1, y1, X, Y);
             pictureBox1.Refresh();
         }
     }

@@ -27,7 +27,7 @@ internal class PathFinder
             // Шаг 3.
             var currentNode = reachable.OrderBy(node => node.EstimateFullPathLength).First();
 
-            //g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(currentNode.Position.X * 20, currentNode.Position.Y * 20, 20, 20));
+            g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(currentNode.Position.X * 20, currentNode.Position.Y * 20, 20, 20));
 
             // Шаг 4.
             if (currentNode.Position == goal)
@@ -66,7 +66,7 @@ internal class PathFinder
     {
         //return (int)Math.Sqrt(Math.Pow(from.X - to.X, 2) + Math.Pow(from.Y - to.Y, 2) + Math.Pow(field[from.X, from.Y].Weight - field[from.X, from.Y].Weight, 2));
 
-        return 20*(Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y) + Math.Abs(field[from.X, from.Y].Weight - field[from.X, from.Y].Weight));
+        return (Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y) + Math.Abs(field[from.X, from.Y].Weight - field[from.X, from.Y].Weight));
     }
 
     private static Collection<PathNode> GetNeighbours(PathNode pathNode, Point goal, Cell[,] field)
