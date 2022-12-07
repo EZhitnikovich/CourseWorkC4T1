@@ -1,6 +1,6 @@
 ﻿namespace c4t1.Model;
 
-public class Labirinth
+public sealed class Labirinth
 {
     public int Width { get; set; }
     public int Height { get; set; }
@@ -17,18 +17,6 @@ public class Labirinth
     public Labirinth()
     {
         Cells = new Cell[0, 0];
-    }
-
-    public bool TryGetWeight(int x, int y, out int weight)
-    {
-        if (x > Width - 1 || x < 0 || y > Height - 1 || y < 0)
-        {
-            weight = -1;
-            return false;
-        }
-
-        weight = Cells[x, y].Weight;
-        return true;
     }
 
     public void AddWeight(int x, int y, int weight)
