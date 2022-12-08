@@ -2,7 +2,7 @@
 
 namespace c4t1.Controller;
 
-internal class LabirinthController
+internal sealed class LabirinthController
 {
     public Labirinth Labirinth{ get; private set; }
 
