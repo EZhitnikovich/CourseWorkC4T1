@@ -27,6 +27,18 @@ public sealed class Labirinth
         Cells = new Cell[Width, Height];
     }
 
+    public bool TryGetWeight(int x, int y, out int? weight)
+    {
+        if (x < 0 || x > Width - 1 || y < 0 || y > Height - 1)
+        {
+            weight = null;
+            return false;
+        }
+
+        weight = Cells[x, y].Weight;
+        return true;
+    }
+
     public void AddWeight(int x, int y, int weight)
     {
         if (x > Width - 1 || x < 0 || y > Height - 1 || y < 0)

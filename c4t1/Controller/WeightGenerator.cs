@@ -1,7 +1,7 @@
 ﻿using c4t1.Model;
 using System;
 
-namespace c4t1.Generator;
+namespace c4t1.Controller;
 
 public sealed class WeightGenerator
 {

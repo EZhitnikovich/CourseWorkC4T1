@@ -1,5 +1,4 @@
 using c4t1.Controller;
-using c4t1.Generator;
 using c4t1.Model;
 using c4t1.Utils;
 
@@ -7,7 +6,9 @@ namespace c4t1;
 
 public partial class Form1 : Form
 {
+    List<Color> gradient = GradientGenerator.GetGradient(Color.Green, Color.Red, 100);
     LabirinthController labirinthController;
+    WeightGenerator weightGenerator;
 
     int CELL_SIZE = 20;
 
@@ -15,6 +16,7 @@ public partial class Form1 : Form
     {
         InitializeComponent();
         labirinthController = new LabirinthController();
+        weightGenerator = new WeightGenerator(labirinthController.Labirinth);
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -24,11 +26,9 @@ public partial class Form1 : Form
 
         labirinthController.Generate(width, height);
 
-        var g = new WeightGenerator(labirinthController.Labirinth);
-
-        g.FillRandomWeights(0, 25);
-        g.Smooth(0, 10);
-        g.Normalize();
+        weightGenerator.FillRandomWeights(0, 25);
+        weightGenerator.Smooth(0, 10);
+        weightGenerator.Normalize();
 
         pictureBox1.Refresh();
     }
@@ -43,17 +43,9 @@ public partial class Form1 : Form
     }
     private async void button3_Click(object sender, EventArgs e)
     {
-        //TODO: clear
-
         if(labirinthController.GetFirstByState(CellState.Start) != new Point(-1,-1) && labirinthController.GetFirstByState(CellState.Finish) != new Point(-1, -1))
         {
-            foreach (var item in labirinthController.Labirinth.Cells)
-            {
-                if (item.State == CellState.Path)
-                {
-                    item.State = CellState.Common;
-                }
-            }
+            labirinthController.ClearPath();
 
             var path = new List<Point>();
 
@@ -67,26 +59,12 @@ public partial class Form1 : Form
                 return;
             }
 
-            var weight = 0;
-            var max = int.MinValue;
-            var min = int.MaxValue;
+            labirinthController.SetPathPoints(path);
+
+            var weight = labirinthController.GetPathWeight(path);
+            var max = labirinthController.GetMaxPathWeight(path);
+            var min = labirinthController.GetMinPathWeight(path);
             var steps = path.Count();
-
-            foreach (var item in path)
-            {
-                labirinthController.Labirinth.Cells[item.X, item.Y].State = CellState.Path;
-                weight += labirinthController.Labirinth.Cells[item.X, item.Y].Weight;
-
-                if(labirinthController.Labirinth.Cells[item.X, item.Y].Weight < min)
-                {
-                    min = labirinthController.Labirinth.Cells[item.X, item.Y].Weight;
-                }
-
-                if(labirinthController.Labirinth.Cells[item.X, item.Y].Weight > max)
-                {
-                    max = labirinthController.Labirinth.Cells[item.X, item.Y].Weight;
-                }
-            }
 
             pictureBox1.Refresh();
 
@@ -96,7 +74,7 @@ public partial class Form1 : Form
 
     private void pictureBox1_Paint(object sender, PaintEventArgs e)
     {
-        LabirinthDrawer.Draw(e.Graphics, labirinthController.Labirinth, GradientGenerator.GetGradient(Color.Green, Color.Red, 100), CELL_SIZE);
+        LabirinthDrawer.Draw(e.Graphics, labirinthController.Labirinth, gradient, CELL_SIZE);
     }
 
     private void pictureBox1_Click(object sender, EventArgs e)
@@ -126,7 +104,7 @@ public partial class Form1 : Form
     {
         var X = e.Location.X / CELL_SIZE;
         var Y = e.Location.Y / CELL_SIZE;
-        if (labirinthController.TryGetWeight(X, Y, out var weight))
+        if (labirinthController.Labirinth.TryGetWeight(X, Y, out var weight))
         {
             label3.Text = $"Высота:\n[{X+1},{Y+1}]:{weight}";
         }
@@ -151,9 +129,7 @@ public partial class Form1 : Form
             var X = e.Location.X / CELL_SIZE;
             var Y = e.Location.Y / CELL_SIZE;
 
-            var g = new WeightGenerator(labirinthController.Labirinth);
-
-            g.AddWeightsInRange(Convert.ToInt32(numericUpDown1.Value), x1, y1, X, Y);
+            weightGenerator.AddWeightsInRange(Convert.ToInt32(numericUpDown1.Value), x1, y1, X, Y);
 
             pictureBox1.Refresh();
         }

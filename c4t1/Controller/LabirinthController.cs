@@ -1,4 +1,6 @@
 ﻿using c4t1.Model;
+using System;
+using System.IO;
 
 namespace c4t1.Controller;
 
@@ -33,16 +35,66 @@ internal sealed class LabirinthController
         }
     }
 
-    public bool TryGetWeight(int x, int y, out int? weight)
+    public void ClearPath()
     {
-        if (x < 0 || x > Labirinth.Width - 1 || y < 0 || y > Labirinth.Height - 1)
+        foreach (var item in Labirinth.Cells)
         {
-            weight = null;
-            return false;
+            if (item.State == CellState.Path)
+            {
+                item.State = CellState.Common;
+            }
+        }
+    }
+
+    public void SetPathPoints(List<Point> points)
+    {
+        foreach (var item in points)
+        {
+            Labirinth.Cells[item.X, item.Y].State = CellState.Path;
+        }
+    }
+
+    public int GetPathWeight(List<Point> points)
+    {
+        int weight = 0;
+
+        foreach (var item in points)
+        {
+            weight += Labirinth.Cells[item.X, item.Y].Weight;
         }
 
-        weight = Labirinth.Cells[x, y].Weight;
-        return true;
+        return weight;
+    }
+
+    public int GetMinPathWeight(List<Point> points)
+    {
+        int min = int.MaxValue;
+
+
+        foreach (var item in points)
+        {
+            if (Labirinth.Cells[item.X, item.Y].Weight < min)
+            {
+                min = Labirinth.Cells[item.X, item.Y].Weight;
+            }
+        }
+
+        return min;
+    }
+
+    public int GetMaxPathWeight(List<Point> points)
+    {
+        int max = int.MinValue;
+
+        foreach (var item in points)
+        {
+            if (Labirinth.Cells[item.X, item.Y].Weight > max)
+            {
+                max = Labirinth.Cells[item.X, item.Y].Weight;
+            }
+        }
+
+        return max;
     }
 
     public Point GetFirstByState(CellState cellState)
