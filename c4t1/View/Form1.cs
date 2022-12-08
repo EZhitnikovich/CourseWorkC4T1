@@ -10,7 +10,7 @@ public partial class Form1 : Form
     LabirinthController labirinthController;
     WeightGenerator weightGenerator;
 
-    int CELL_SIZE = 20;
+    int CELL_SIZE = 10;
 
     public Form1()
     {
@@ -51,7 +51,7 @@ public partial class Form1 : Form
 
             await Task.Run(() =>
             {
-                path = PathFinder.FindPath(labirinthController.Labirinth.Cells, labirinthController.GetFirstByState(CellState.Start), labirinthController.GetFirstByState(CellState.Finish), pictureBox1.CreateGraphics());
+                path = new AStar(labirinthController.Labirinth).Find(labirinthController.GetFirstByState(CellState.Start), labirinthController.GetFirstByState(CellState.Finish));
             });
 
             if (!path.Any())

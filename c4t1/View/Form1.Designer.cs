@@ -92,7 +92,7 @@
             this.numericUpDownX.Size = new System.Drawing.Size(75, 23);
             this.numericUpDownX.TabIndex = 2;
             this.numericUpDownX.Value = new decimal(new int[] {
-            85,
+            170,
             0,
             0,
             0});
@@ -105,7 +105,7 @@
             this.numericUpDownY.Size = new System.Drawing.Size(75, 23);
             this.numericUpDownY.TabIndex = 3;
             this.numericUpDownY.Value = new decimal(new int[] {
-            50,
+            100,
             0,
             0,
             0});
