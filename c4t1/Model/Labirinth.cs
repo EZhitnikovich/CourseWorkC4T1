@@ -1,9 +1,10 @@
-﻿namespace c4t1.Model;
+﻿using System;
+namespace c4t1.Model;
 
 public sealed class Labirinth
 {
-    public int Width { get; set; }
-    public int Height { get; set; }
+    public int Width { get; private set; }
+    public int Height { get; private set; }
 
     public Cell[,] Cells { get; private set; }
 
@@ -17,6 +18,13 @@ public sealed class Labirinth
     public Labirinth()
     {
         Cells = new Cell[0, 0];
+    }
+
+    public void ChangeSize(int width, int height)
+    {
+        Width = width;
+        Height = height;
+        Cells = new Cell[Width, Height];
     }
 
     public void AddWeight(int x, int y, int weight)

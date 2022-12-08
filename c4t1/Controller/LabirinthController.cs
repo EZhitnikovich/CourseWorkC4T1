@@ -4,7 +4,7 @@ namespace c4t1.Controller;
 
 internal sealed class LabirinthController
 {
-    public Labirinth Labirinth{ get; private set; }
+    public Labirinth Labirinth { get; private set; }
 
     public LabirinthController()
     {
@@ -13,16 +13,16 @@ internal sealed class LabirinthController
 
     public void Generate(int width, int height)
     {
-        if(width < 0)
+        if (width < 0)
         {
             throw new ArgumentException($"{nameof(width)} can't be less then zero");
         }
-        if(height < 0)
+        if (height < 0)
         {
             throw new ArgumentException($"{nameof(height)} can't be less then zero");
         }
 
-        Labirinth = new Labirinth(width, height);
+        Labirinth.ChangeSize(width, height);
 
         for (int i = 0; i < Labirinth.Width; i++)
         {
