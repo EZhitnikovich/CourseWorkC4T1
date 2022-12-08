@@ -24,8 +24,12 @@ public partial class Form1 : Form
 
         labirinthController.Generate(width, height);
 
-        WeightChanger.FillRandomWeights(labirinthController.Labirinth, 0, 25);
-        WeightChanger.MakePositiveWeights(labirinthController.Labirinth);
+        var g = new WeightGenerator(labirinthController.Labirinth);
+
+        g.FillRandomWeights(0, 25);
+        g.Smooth(0, 10);
+        g.Normalize();
+
         pictureBox1.Refresh();
     }
 
@@ -147,7 +151,10 @@ public partial class Form1 : Form
             var X = e.Location.X / CELL_SIZE;
             var Y = e.Location.Y / CELL_SIZE;
 
-            WeightChanger.AddWeightsInRange(labirinthController.Labirinth, Convert.ToInt32(numericUpDown1.Value), x1, y1, X, Y);
+            var g = new WeightGenerator(labirinthController.Labirinth);
+
+            g.AddWeightsInRange(Convert.ToInt32(numericUpDown1.Value), x1, y1, X, Y);
+
             pictureBox1.Refresh();
         }
     }

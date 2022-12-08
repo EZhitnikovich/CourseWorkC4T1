@@ -1,75 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using c4t1.Model;
+﻿using c4t1.Model;
+using System;
 
-namespace c4t1.Generator
+namespace c4t1.Generator;
+
+public sealed class WeightGenerator
 {
-    public static class WeightChanger
+    public Labirinth Labirinth { get; private set; }
+
+    public WeightGenerator(Labirinth labirinth)
     {
-        public static void FillRandomWeights(Labirinth labirinth, int changeFrom, int changeTo)
+        Labirinth = labirinth;
+    }
+
+    public void FillRandomWeights(int changeFrom, int changeTo)
+    {
+        Random rand = new Random();
+
+        for (int x = 0; x < Labirinth.Width; x++)
         {
-            Random rand = new Random();
-
-            for (int x = 0; x < labirinth.Width; x++)
+            for (int y = 0; y < Labirinth.Height; y++)
             {
-                for (int y = 0; y < labirinth.Height; y++)
-                {
-                    int sum = 0;
-                    int sumCount = 0;
-
-                    if (y != 0)
-                    {
-                        sum += labirinth.Cells[x, y - 1].Weight;
-                        sumCount++;
-                    }
-
-                    if (y != labirinth.Height - 1)
-                    {
-                        sum += labirinth.Cells[x, y + 1].Weight;
-                        sumCount++;
-                    }
-
-                    if (x != 0)
-                    {
-                        sum += labirinth.Cells[x - 1, y].Weight;
-                        sumCount++;
-                    }
-
-                    if (x != labirinth.Width - 1)
-                    {
-                        sum += labirinth.Cells[x + 1, y].Weight;
-                        sumCount++;
-                    }
-
-                    labirinth.Cells[x, y].Weight = sum / sumCount + rand.Next(changeFrom, changeTo) * (rand.Next(0, 3) == 1 ? 1 : -1);
-                }
+                Labirinth.Cells[x, y].Weight += rand.Next(changeFrom, changeTo) * (rand.Next(0, 5) == 1 ? 1 : -1);
             }
         }
+    }
 
-        public static void MakePositiveWeights(Labirinth labirinth)
+    public void Smooth(int changeFrom, int changeTo)
+    {
+        Random rand = new Random();
+
+        for (int x = 0; x < Labirinth.Width; x++)
         {
-            var minAbs = Math.Abs(labirinth.Cells.Cast<Cell>().Min(x => x.Weight));
-
-            foreach (var item in labirinth.Cells)
+            for (int y = 0; y < Labirinth.Height; y++)
             {
-                item.Weight += minAbs;
+                int sum = 0;
+                int sumCount = 0;
+
+                if (y != 0)
+                {
+                    sum += Labirinth.Cells[x, y - 1].Weight;
+                    sumCount++;
+                }
+
+                if (y != Labirinth.Height - 1)
+                {
+                    sum += Labirinth.Cells[x, y + 1].Weight;
+                    sumCount++;
+                }
+
+                if (x != 0)
+                {
+                    sum += Labirinth.Cells[x - 1, y].Weight;
+                    sumCount++;
+                }
+
+                if (x != Labirinth.Width - 1)
+                {
+                    sum += Labirinth.Cells[x + 1, y].Weight;
+                    sumCount++;
+                }
+
+                Labirinth.Cells[x, y].Weight = sum / sumCount + rand.Next(changeFrom, changeTo);
             }
         }
+    }
 
-        public static void AddWeightsInRange(Labirinth labirinth, int weight, int X1, int Y1, int X2, int Y2)
+    public void Normalize()
+    {
+        var minAbs = Math.Abs(Labirinth.Cells.Cast<Cell>().Min(x => x.Weight));
+
+        foreach (var item in Labirinth.Cells)
         {
-            (X1, X2) = X1 > X2 ? (X2, X1) : (X1, X2);
-            (Y1, Y2) = Y1 > Y2 ? (Y2, Y1) : (Y1, Y2);
+            item.Weight += minAbs;
+        }
+    }
 
-            for (int i = X1; i <= X2; i++)
+    public void AddWeightsInRange(int weight, int X1, int Y1, int X2, int Y2)
+    {
+        (X1, X2) = X1 > X2 ? (X2, X1) : (X1, X2);
+        (Y1, Y2) = Y1 > Y2 ? (Y2, Y1) : (Y1, Y2);
+
+        for (int i = X1; i <= X2; i++)
+        {
+            for (int j = Y1; j <= Y2; j++)
             {
-                for (int j = Y1; j <= Y2; j++)
-                {
-                    labirinth.AddWeight(i, j, weight);
-                }
+                Labirinth.AddWeight(i, j, weight);
             }
         }
     }
